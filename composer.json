@@ -1,0 +1,21 @@
+{
+    "name": "danek/table-generator",
+    "description": "PHP library for generating simple HTML tables",
+    "keywords": ["table", "generator"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jirka Danek",
+            "homepage": "https://jdanek.eu"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Danek\\TableGenerator\\": "src"
+        }
+    },
+    "minimum-stability": "dev"
+}
