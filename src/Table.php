@@ -29,7 +29,7 @@ class Table
     protected $maxRowCells = 0;
 
     /** @var array custom classes for the table */
-    protected $tableClasses = [];
+    protected $tableClasses = ['table'];
 
     /**
      * Table constructor.
@@ -70,7 +70,7 @@ class Table
      */
     public function setHeaderColumns(array $columns): self
     {
-        $this->header = $this->header()->addRows($columns);
+        $this->header()->addRows($columns);
         return $this;
     }
 
@@ -80,7 +80,7 @@ class Table
      */
     public function setBodyRows(array $rows): self
     {
-        $this->body = $this->body()->addRows($rows);
+        $this->body()->addRows($rows);
         return $this;
     }
 
@@ -90,7 +90,7 @@ class Table
      */
     public function setFooterRows(array $rows): self
     {
-        $this->footer = $this->footer()->addRows($rows);
+        $this->footer()->addRows($rows);
         return $this;
     }
 
@@ -99,7 +99,10 @@ class Table
      */
     public function header(): Header
     {
-        return $this->header ?? new Header($this);
+        if ($this->header === null) {
+            $this->header = new Header($this);
+        }
+        return $this->header;
     }
 
     /**
@@ -107,7 +110,10 @@ class Table
      */
     public function body(): Body
     {
-        return $this->body ?? new Body($this);
+        if ($this->body === null) {
+            $this->body = new Body($this);
+        }
+        return $this->body;
     }
 
     /**
@@ -115,7 +121,10 @@ class Table
      */
     public function footer(): Footer
     {
-        return $this->footer ?? new Footer($this);
+        if ($this->footer === null) {
+            $this->footer = new Footer($this);
+        }
+        return $this->footer;
     }
 
     /**
@@ -125,20 +134,20 @@ class Table
      */
     public function render(): string
     {
-        $output = "<table " . $this->getTagId() . " class='table " . $this->composeTableClasses() . "'>\n";
+        $output = "<table " . $this->getTagId() . " class='" . $this->composeTableClasses() . "'>\n";
 
         // table header
-        if (isset($this->header)) {
+        if ($this->header !== null) {
             $output .= $this->header->render();
         }
 
         // table body
-        if (isset($this->body)) {
+        if ($this->body !== null) {
             $output .= $this->body->render();
         }
 
         // table footer
-        if (isset($this->footer)) {
+        if ($this->footer !== null) {
             $output .= $this->footer->render();
         }
 
